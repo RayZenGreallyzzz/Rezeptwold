@@ -34,5 +34,6 @@ assert sum(x.get("reference_only",False) for x in records)==10
 for name in ("prep","mix","cook","bake","ferment","serve","knead"):
     assert (assets/"steps"/(name+".svg")).exists(), "Missing step art: "+name
 assert "id=\"homeCountry\"" in page and "id=\"magSpirits\"" in page
+assert "photos&&photos[k]" in page, "Guard before category photo initialization"
 assert len([r for r in records if r.get("magazine")])>=15
 print(f"Validated: {len(records)} cards, {len(extra)} expansion cards, {sum(x.get('reference_only',False) for x in records)} guides, remaining are measured recipes.")
