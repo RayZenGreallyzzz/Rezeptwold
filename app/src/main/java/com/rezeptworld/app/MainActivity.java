@@ -39,8 +39,8 @@ public class MainActivity extends Activity {
 
     @Override public void onCreate(Bundle state) {
         super.onCreate(state);
-        getWindow().setStatusBarColor(Color.rgb(18, 53, 46));
-        getWindow().setNavigationBarColor(Color.rgb(18, 53, 46));
+        getWindow().setStatusBarColor(Color.rgb(16, 16, 15));
+        getWindow().setNavigationBarColor(Color.rgb(16, 16, 15));
         web = new WebView(this);
         setContentView(web);
         WebSettings settings = web.getSettings();
@@ -191,7 +191,7 @@ public class MainActivity extends Activity {
     @Override public void onBackPressed() {
         if (web != null) {
             web.evaluateJavascript(
-                "(function(){let d=document.querySelector('dialog[open]');if(d){d.close();return true;}return false})()",
+                "(function(){return !!(window.VkusferaBack&&window.VkusferaBack())})()",
                 value -> { if (!"true".equals(value)) MainActivity.super.onBackPressed(); }
             );
         } else super.onBackPressed();
