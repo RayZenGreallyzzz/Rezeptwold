@@ -54,6 +54,8 @@ jobs:
         run: node tools/validate_art.js
       - name: Validate online Google and offline recipe search
         run: node tools/validate_google_search.js
+      - name: Check catalog grouping and full visibility
+        run: node tools/validate_catalog_groups.js
       - name: Build compatible debug APK
         run: gradle --no-daemon :app:assembleDebug
       - name: Upload APK
