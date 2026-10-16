@@ -119,8 +119,8 @@ footer{padding:25px 0;text-align:center;color:#879185;font-size:12px}
 'use strict';
 var el=function(id){return document.getElementById(id)};
 var base=JSON.parse(el('baseRecipes').textContent||'[]');
-var read=function(k,def){try{var v=localStorage.getItem(k);return v?JSON.parse(v):def}catch(e){return def}};
-var write=function(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true}catch(e){toast('Недостаточно памяти. Экспортируйте рецепты.');return false}};
+var read=function(k,def){try{var v=null;if(window.RezeptWorldNative&&window.RezeptWorldNative.loadState)v=window.RezeptWorldNative.loadState(k);if(!v)v=localStorage.getItem(k);return v?JSON.parse(v):def}catch(e){return def}};
+var write=function(k,v){try{var value=JSON.stringify(v);if(window.RezeptWorldNative&&window.RezeptWorldNative.saveState){if(!window.RezeptWorldNative.saveState(k,value)){toast('Не удалось сохранить. Сделайте резервную копию.');return false}return true}localStorage.setItem(k,value);return true}catch(e){toast('Не удалось сохранить. Проверьте память устройства.');return false}};
 var mine=read('rz_mine_v1',[]), remote=read('rz_remote_v1',[]), favorites=read('rz_favorites_v1',[]);
 var mode=read('rz_online_v1',false), tab='all', onlyFav=false, onlyMine=false,shown=24,active=null,editing=null,ratio=1,photoBuffer='';
 var all=[],groups=[['all','Все','🍽'],['baking','Выпечка','🥐'],['main','Основные блюда','🍲'],['soup','Супы','🥣'],['salad','Салаты','🥗'],['dessert','Десерты','🍰'],['drinks','Напитки','🍹'],['distill','Самогоноварение','🥃'],['whisky','Виски','🥃'],['gin','Джин','🍸'],['rum','Ром','🍹'],['brandy','Бренди','🍇'],['liqueur','Настойки и ликёры','🍒'],['cocktail','Коктейли','🍸'],['wine','Другой алкоголь','🍷'],['preserve','Заготовки','🥒'],['sauce','Соусы','🧂'],['other','Другое','📚']];
