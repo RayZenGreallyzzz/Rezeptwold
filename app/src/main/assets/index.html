@@ -92,7 +92,7 @@ footer{padding:25px 0;text-align:center;color:#879185;font-size:12px}
  <div class="browsehead"><button id="backBrowse" aria-label="Назад">‹</button><h2 id="browseTitle">Все рецепты</h2></div>
  <div class="mag-filter-heading">Поиск рецептов и ингредиентов</div><nav class="chips" id="tabs" aria-label="Разделы рецептов"></nav>
  <section class="searchbar"><input type="search" id="q" placeholder="Поиск в книге по блюдам и ингредиентам…" aria-label="Поиск" enterkeyhint="search"><div class="filters"><select id="country"><option value="">Все страны</option></select><select id="category"><option value="">Все категории</option></select><button class="soft" id="favBtn">♡ Избранное</button><button class="soft" id="mineBtn">✎ Мои рецепты</button></div></section>
- <div id="googlePanel" class="google-panel" style="display:none"><div><strong>🌐 Поиск рецептов в Google</strong><p>Найдите любое блюдо в интернете, даже если его нет в книге. Результаты откроются в браузере. Ваша локальная библиотека останется доступной.</p></div><button type="button" class="primary" id="googleSearchBtn">Найти в Google ↗</button></div>
+ <div id="googlePanel" class="google-panel" style="display:none"><div><strong>🌐 Поиск рецептов в Google</strong><p>Найдите любое блюдо в интернете, даже если его нет в книге. Результаты откроются в браузере. Ваша локальная библиотека останется доступной.</p></div><div class="google-buttons"><button type="button" class="primary" id="googleSearchBtn">Найти в Google ↗</button><button type="button" class="soft" id="googleSaveBtn">＋ Добавить рецепт вручную</button></div></div>
  <div class="toolline"><div id="resultCount" class="muted"></div><div><button class="soft" id="modeBtn">📴 Офлайн</button> <button class="soft" id="syncBtn">↻ Обновить</button> <button class="soft" id="exportBtn">⇩ Экспорт</button> <button class="soft" id="importBtn">⇧ Импорт</button></div></div>
  <div id="gallery" class="gallery"></div><button class="soft full" id="moreBtn">Показать ещё рецепты</button>
 </section>
@@ -305,6 +305,7 @@ el('homeSearch').onkeydown=function(e){if(e.key==='Enter'){e.preventDefault();if
 el('homeBookBtn').onclick=function(){searchBook(el('homeSearch').value)};
 el('homeGoogleBtn').onclick=function(){openGoogleSearch(el('homeSearch').value)};
 el('googleSearchBtn').onclick=function(){openGoogleSearch(el('q').value)};
+el('googleSaveBtn').onclick=function(){openEditor(null)};
 el('q').onkeydown=function(e){if(e.key==='Enter'&&mode){e.preventDefault();openGoogleSearch(el('q').value)}};
 
 el('offlineMode').onclick=function(){setModeOnline(false)};
