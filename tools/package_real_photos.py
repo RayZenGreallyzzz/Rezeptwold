@@ -69,6 +69,7 @@ for rec in RECORDS:
     "matched_recipe_ids":sorted(set(i for x in good for i in x["ids"])),
     "missing":[x["file"] for x in bad]
 },ensure_ascii=False),encoding="utf8")
+(ASSETS/"photo-status.js").write_text("window.VKUSFERA_AVAILABLE_PHOTOS="+json.dumps([x["output"] for x in good],ensure_ascii=False)+";\n",encoding="utf8")
 print("CURATED PHOTO COVERAGE:",len(good),"/",len(RECORDS),"files,",
       len(set(i for x in good for i in x["ids"])),"recipe cards")
 if not good:
