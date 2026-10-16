@@ -1,0 +1,73 @@
+
+/* Vkusfera v0.6 culinary magazine and approved home navigator */
+:root { --gold:#e4ba70; --dark:#0b0e0c; --panel:#161916; --ink:#f7ead4 }
+header {background:#10140f!important;border-bottom:1px solid #5c472f!important}
+.logo {color:#ecc37e!important;text-shadow:0 1px 1px #000}
+.home-explorer{background:#181a17;border:1px solid #4b3a28;border-radius:16px;padding:16px;margin:14px 0 18px}
+.home-explorer h2{font:23px Georgia,serif;color:#f0d4a3;margin:0 0 5px}
+.home-explorer p{font-size:12px;color:#afa79a;margin:0 0 12px}
+.home-explorer select{background:#262823;color:#f3e3c7;border:1px solid #74552f;border-radius:10px;padding:13px;width:100%;font-size:15px}
+.home-explorer .explorer-row{display:grid;grid-template-columns:1fr auto;gap:9px;align-items:center}
+.home-explorer .explorer-row button{background:#e4b96d;color:#191713;padding:13px;border:0;border-radius:10px;font-weight:bold}
+.home-explorer .explorer-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.home-explorer .explorer-top span{font-size:27px}
+.homegrid{margin:0 -5px}
+.homecell{width:33.3333%;padding:5px}
+.homecard{height:138px;border:1px solid #57442e;background:#31251a;padding:12px 5px 13px}
+.homecard img{opacity:.82!important;filter:saturate(.95) contrast(1.05)}
+.homecard:before{background:linear-gradient(180deg,#08080922 10%,#070807d8 100%)!important}
+.homecard .emoji{font-size:30px;text-shadow:0 3px 5px #000;z-index:3}
+.homecard .name{font-size:13px;line-height:1.15;color:#fff5df;text-shadow:0 2px 3px #000}
+.homecard .category-count{z-index:3;font-size:10px;color:#f4c87c;margin-top:4px}
+.hero{min-height:255px}
+.mag-home-title{font:24px Georgia,serif;margin:20px 0 9px;color:#ecc98c}
+.mag-spirit-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-bottom:15px}
+.mag-spirit-list button{background:#1c1e1b;border:1px solid #4b3d2c;border-radius:12px;text-align:left;padding:12px;color:#f3e3c9;display:flex;align-items:center;gap:11px;min-height:69px}
+.mag-spirit-list button span{font-size:29px}
+.mag-spirit-list button b{display:block;font-size:13px}
+.mag-spirit-list button small{font-size:11px;color:#c6a574}
+.mag-countries-quick{display:flex;gap:9px;overflow-x:auto;padding:4px 0 12px}
+.mag-countries-quick button{min-width:115px;padding:9px;background:#23251f;color:#f8eccd;border:1px solid #4a3e2e;border-radius:11px;text-align:left}
+.mag-countries-quick button span{font-size:24px;margin-right:6px}
+.mag-countries-quick button small{display:block;color:#b9a382;margin-top:3px}
+.mag-filter-heading{font:17px Georgia,serif;color:var(--gold);margin:13px 0 8px}
+.searchbar .filters{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.searchbar .filters select,.searchbar .filters button{min-width:0;width:100%;margin:0}
+.mag-active-filter{background:#3c3325;border:1px solid #b78e49;color:#fce0a4;border-radius:12px;padding:10px 12px;margin:9px 0;font-size:13px}
+.countrygrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0 30px}
+.countrycell{width:auto;padding:0}
+.countrycell button{background:#1c1f1a;border:1px solid #51402d;min-height:78px}
+.countrycell button .flag{font-size:30px;margin-right:9px}
+.countrycell button .country-title{font-family:Georgia,serif;font-size:17px;color:#f9e5c5}
+.countrycell button small{margin-top:4px}
+.country-search{display:block;background:#252922;color:#f0eee7;border:1px solid #54432d;border-radius:10px;width:100%;padding:14px;margin:15px 0}
+.tile-inner{box-shadow:0 7px 22px #0009}
+.art{background:#272b22!important;overflow:hidden}
+.art img{width:100%;height:100%;object-fit:cover;opacity:1!important;filter:saturate(1.05)}
+.art .photocaption{position:absolute;bottom:4px;left:6px;color:#fff;font-size:9px;background:#0a0a0a9e;border-radius:5px;padding:2px 5px}
+.tile-body h3{font-size:17px;line-height:1.25}
+.panel{background:#101410}
+.panel .maghero{position:relative;height:260px;overflow:hidden;border-radius:15px;margin:14px 0 13px;border:1px solid #56432a}
+.panel .maghero img{width:100%;height:100%;object-fit:cover;display:block}
+.panel .maghero span{position:absolute;bottom:9px;left:9px;background:#0c0b0abb;color:#f5dec0;font-size:10px;border-radius:7px;padding:5px 8px}
+.panel .steps.magsteps{list-style:none;padding:0;display:grid;gap:13px}
+.panel .steps.magsteps>li{margin:0;padding:0;background:#1b1e19;border:1px solid #4a3b29;border-radius:13px;overflow:hidden}
+.magstep-head{display:flex;align-items:center;gap:12px;padding:12px 13px;border-bottom:1px solid #433629}
+.magstep-num{background:#e4b869;color:#171510;width:30px;height:30px;min-width:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:15px}
+.magstep-head strong{font:17px Georgia,serif;color:#efcc92}
+.magstep-visual{width:100%;height:155px;object-fit:cover;background:#252a23;display:block}
+.magstep-text{padding:13px 15px 18px;color:#eae4d8;font-size:15px;line-height:1.6}
+.magphoto-credit{color:#baac99;font-size:11px;margin:0 0 14px}
+.magreader-top{font-size:12px;color:#f5d7a1;letter-spacing:.8px;text-transform:uppercase}
+.panel .ingredients label{padding:11px 4px}
+.panel .ingredients input{accent-color:#ddac56}
+.magazine-kicker{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:#ecc16e;margin-top:12px}
+@media(max-width:460px){
+.homecard{height:116px}.homecard .name{font-size:11px}.homecard .emoji{font-size:26px}
+.homecell{padding:4px}
+.countrygrid{grid-template-columns:1fr}
+.magstep-visual{height:136px}
+.panel .maghero{height:205px}
+.mag-spirit-list button{padding:8px;gap:7px}
+.mag-spirit-list button span{font-size:23px}
+}
