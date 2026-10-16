@@ -27,6 +27,9 @@ const context={window:{}, Math, encodeURIComponent, String, Object, Array};
 vm.createContext(context);
 vm.runInContext(fs.readFileSync(path.join(root,'recipe-art.js'),'utf8'),context);
 if(typeof context.window.VkusferaArt!=='function') throw Error('Illustration function missing');
+const os=require('os');
+const cp=require('child_process');
+const outDir=fs.mkdtempSync(path.join(os.tmpdir(),'vkusfera-svg-'));
 const covers=new Set();
 for (const recipe of all) {
   const cover=context.window.VkusferaArt(recipe);
@@ -35,5 +38,9 @@ for (const recipe of all) {
   if(!svg.includes('<svg ') || !svg.includes('</svg>')) throw Error('Malformed SVG: '+recipe.name);
   if(covers.has(cover)) throw Error('Duplicate cover: '+recipe.name);
   covers.add(cover);
+  fs.writeFileSync(path.join(outDir,recipe.series_number+'.svg'),svg);
 }
+const check=cp.spawnSync('python3',['tools/validate_svg.py',outDir],{stdio:'inherit'});
+fs.rmSync(outDir,{recursive:true,force:true});
+if(check.status!==0)process.exit(1);
 console.log('Verified '+covers.size+' distinct offline illustrations for '+all.length+' cookbook entries.');
