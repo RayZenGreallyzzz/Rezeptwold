@@ -93,3 +93,9 @@ header {background:#10140f!important;border-bottom:1px solid #5c472f!important}
 @media(max-width:520px){.google-panel {flex-direction:column;align-items:stretch}.google-panel button {width:100%}.online-home-actions{flex-wrap:nowrap}.online-home-actions button{font-size:11px;padding:10px 7px}}
 
 .google-buttons{display:flex;flex-direction:column;gap:7px;flex:0 0 auto;min-width:173px}.google-buttons button{width:100%}.google-buttons .soft{color:#f0d8ac;background:#292823;border-color:#5a4631}.google-buttons button{font-size:12px}@media(max-width:520px){.google-buttons{width:100%}}
+
+/* Vkusfera v0.9.1: always-visible access to the complete recipe catalog. */
+.catalog-total{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;margin:14px 0 10px;background:#211f19;border:1px solid #957746;border-radius:12px;color:#f3dbac;font-size:13px;line-height:1.4}
+.catalog-total .soft{flex-shrink:0;background:#e3b873;color:#151712;border-color:#ddbc87;font-weight:700;padding:10px 12px;font-size:12px}
+#moreBtn{border-color:#b88b49;color:#f0cc95;margin:15px auto 35px;min-height:46px;font-weight:650}
+@media(max-width:480px){.catalog-total{flex-direction:column;align-items:stretch}.catalog-total button{width:100%;min-height:43px}}
