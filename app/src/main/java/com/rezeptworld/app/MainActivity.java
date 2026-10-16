@@ -99,6 +99,19 @@ public class MainActivity extends Activity {
     }
 
     public final class Bridge {
+        private boolean permitted(String key) {
+            return "rz_mine_v1".equals(key) || "rz_remote_v1".equals(key) ||
+                   "rz_favorites_v1".equals(key) || "rz_online_v1".equals(key);
+        }
+        @JavascriptInterface public String loadState(String key) {
+            if (!permitted(key)) return null;
+            return getSharedPreferences("vkusfera_settings", MODE_PRIVATE).getString(key, null);
+        }
+        @JavascriptInterface public boolean saveState(String key, String value) {
+            if (!permitted(key) || value == null || value.length() > 4000000) return false;
+            return getSharedPreferences("vkusfera_settings", MODE_PRIVATE)
+                   .edit().putString(key, value).commit();
+        }
         @JavascriptInterface public void requestUpdates() {
             new Thread(() -> {
                 HttpURLConnection conn = null;
