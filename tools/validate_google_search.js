@@ -1,0 +1,20 @@
+#!/usr/bin/env node
+const fs=require('fs'),assert=require('assert'),path=require('path');
+const root=path.resolve(__dirname,'..');
+const html=fs.readFileSync(path.join(root,'app/src/main/assets/index.html'),'utf8');
+const java=fs.readFileSync(path.join(root,'app/src/main/java/com/rezeptworld/app/MainActivity.java'),'utf8');
+const css=fs.readFileSync(path.join(root,'app/src/main/assets/magazine.css'),'utf8');
+const keys=['homeBookBtn','homeGoogleBtn','googlePanel','googleSearchBtn','googleSaveBtn','homeSearchHint','q'];
+for(const k of keys)assert(html.includes('id="'+k+'"'),'Missing '+k);
+assert(/@JavascriptInterface public void searchGoogle\(String rawQuery\)/.test(java),'No Android Google bridge');
+assert(java.includes('.scheme("https")')&&java.includes('.authority("www.google.com")'),'Google destination wrong');
+assert(java.includes('.appendQueryParameter("q", query'),'Search not URL encoded by Android');
+assert(java.includes('Intent.ACTION_VIEW, googleUri'),'Browser intent not used');
+assert(html.includes('RezeptWorldNative.searchGoogle(query)'),'No Android bridge invocation');
+assert(html.includes('encodeURIComponent(query+'),'Missing encoded web fallback');
+assert(html.includes('if(mode)openGoogleSearch(el(\'homeSearch\').value)'),'Enter not Google');
+assert(html.includes('else searchBook(el(\'homeSearch\').value)'),'Enter not offline');
+assert(!html.includes('function setModeOnline(val){mode=val;updateModeLabel();updateHomeMode();if(mode)sync()}'),'Legacy auto sync left behind');
+assert(html.includes('el(\'googleSaveBtn\').onclick=function(){openEditor(null)}'),'Manual import missing');
+assert(css.includes('.google-panel'),'Google controls unstyled');
+console.log('Google search / offline search integration passed.');
