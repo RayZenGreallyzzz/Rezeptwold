@@ -79,7 +79,9 @@ footer{padding:25px 0;text-align:center;color:#879185;font-size:12px}
 <main class="wrap">
 <section id="homeScreen">
  <section class="hero"><div class="kicker">Ваша кулинарная библиотека</div><h1>Откройте мир<br>вкусов</h1><p>Национальные блюда, выпечка, напитки, коктейли и домашние заготовки — всё под рукой.</p><div id="counter">Загружаем рецепты…</div></section>
- <div class="herosearch"><label for="homeSearch">⌕</label><input type="search" id="homeSearch" placeholder="Найти рецепт, блюдо, ингредиент…"></div>
+ <div class="herosearch"><label for="homeSearch">⌕</label><input type="search" id="homeSearch" placeholder="Название блюда или ингредиенты…" enterkeyhint="search" autocomplete="off"></div>
+ <div class="online-home-actions"><button type="button" class="soft" id="homeBookBtn">📖 Найти в книге</button><button type="button" class="primary" id="homeGoogleBtn" style="display:none">🌐 Искать в Google ↗</button></div>
+ <p id="homeSearchHint" class="search-hint">Без интернета — поиск по сохранённым рецептам.</p>
  <div class="modechips"><button id="offlineMode" class="active">✓ Офлайн</button><button id="onlineMode">☁ Онлайн</button></div>
  <div class="home-explorer"><div class="explorer-top"><h2>🌍 Кухни мира</h2><span>✦</span></div><p>Выберите страну и откройте все её блюда, напитки и выпечку.</p><div class="explorer-row"><select id="homeCountry"><option value="">Все страны</option></select><button id="homeCountryBtn">Открыть →</button></div></div><div class="sectionline"><h2>Разделы книги</h2><span id="sectionCount"></span></div>
  <div id="homeCategories" class="homegrid"></div>
@@ -89,12 +91,13 @@ footer{padding:25px 0;text-align:center;color:#879185;font-size:12px}
 <section id="browseScreen">
  <div class="browsehead"><button id="backBrowse" aria-label="Назад">‹</button><h2 id="browseTitle">Все рецепты</h2></div>
  <div class="mag-filter-heading">Поиск рецептов и ингредиентов</div><nav class="chips" id="tabs" aria-label="Разделы рецептов"></nav>
- <section class="searchbar"><input type="search" id="q" placeholder="Поиск блюд и ингредиентов…" aria-label="Поиск"><div class="filters"><select id="country"><option value="">Все страны</option></select><select id="category"><option value="">Все категории</option></select><button class="soft" id="favBtn">♡ Избранное</button><button class="soft" id="mineBtn">✎ Мои рецепты</button></div></section>
+ <section class="searchbar"><input type="search" id="q" placeholder="Поиск в книге по блюдам и ингредиентам…" aria-label="Поиск" enterkeyhint="search"><div class="filters"><select id="country"><option value="">Все страны</option></select><select id="category"><option value="">Все категории</option></select><button class="soft" id="favBtn">♡ Избранное</button><button class="soft" id="mineBtn">✎ Мои рецепты</button></div></section>
+ <div id="googlePanel" class="google-panel" style="display:none"><div><strong>🌐 Поиск рецептов в Google</strong><p>Найдите любое блюдо в интернете, даже если его нет в книге. Результаты откроются в браузере. Ваша локальная библиотека останется доступной.</p></div><button type="button" class="primary" id="googleSearchBtn">Найти в Google ↗</button></div>
  <div class="toolline"><div id="resultCount" class="muted"></div><div><button class="soft" id="modeBtn">📴 Офлайн</button> <button class="soft" id="syncBtn">↻ Обновить</button> <button class="soft" id="exportBtn">⇩ Экспорт</button> <button class="soft" id="importBtn">⇧ Импорт</button></div></div>
  <div id="gallery" class="gallery"></div><button class="soft full" id="moreBtn">Показать ещё рецепты</button>
 </section>
 <section id="countryScreen"><div class="browsehead"><button id="backCountries">‹</button><h2>Национальные кухни</h2></div><p class="muted">🌍 Блюда, выпечка и напитки по странам</p><input class="country-search" type="search" id="countrySearch" placeholder="Поиск страны или кухни…"><div class="countrygrid" id="countriesList"></div></section>
-<section id="extraScreen"><div class="browsehead"><button id="backExtra">‹</button><h2>Настройки и данные</h2></div><div class="extraoptions"><button id="extraNew">＋ Добавить свой рецепт</button><button id="extraSync">☁ Загрузить новые рецепты</button><button id="extraExport">⇩ Сохранить мои рецепты</button><button id="extraImport">⇧ Восстановить рецепты</button><button id="extraCountries">🌍 Национальные кухни</button><button id="extraOffline">◉ Переключить онлайн / офлайн</button><p class="muted">Базовые рецепты и личная библиотека работают без интернета. Онлайн-дополнения доступны после подключения.</p></div></section>
+<section id="extraScreen"><div class="browsehead"><button id="backExtra">‹</button><h2>Настройки и данные</h2></div><div class="extraoptions"><button id="extraNew">＋ Добавить свой рецепт</button><button id="extraSync">☁ Загрузить новые рецепты</button><button id="extraExport">⇩ Сохранить мои рецепты</button><button id="extraImport">⇧ Восстановить рецепты</button><button id="extraCountries">🌍 Национальные кухни</button><button id="extraOffline">◉ Переключить онлайн / офлайн</button><button id="extraGoogle">🌐 Найти рецепт в Google</button><p class="muted">Базовые рецепты и личная библиотека работают без интернета. В онлайн-режиме можно искать любые блюда в Google: результаты откроются в браузере. Дополнения к офлайн-каталогу загружаются отдельно.</p></div></section>
 </main>
 <footer>Вкусфера · приложение для Android · Рецепты и технологии разных стран · офлайн-библиотека</footer>
 <nav id="bottomNav" aria-label="Навигация"><button data-nav="home" class="active"><span>⌂</span><span>Главная</span></button><button data-nav="search"><span>⌕</span><span>Поиск</span></button><button data-nav="fav"><span>♡</span><span>Избранное</span></button><button data-nav="mine"><span>▤</span><span>Мои рецепты</span></button><button data-nav="more"><span>⋯</span><span>Ещё</span></button></nav>
@@ -141,7 +144,7 @@ function refreshData(){all=base.concat(remote).concat(mine);var guides=all.filte
 function opts(obj,prev,first){var ks=Object.keys(obj).sort(),str='<option value="">'+first+'</option>';for(var j=0;j<ks.length;j++)str+='<option value="'+escapeHtml(ks[j])+'">'+escapeHtml(ks[j])+'</option>';return str}
 el('country').innerHTML=opts(cs,country,'Все страны');el('category').innerHTML=opts(ct,category,'Все категории');el('country').value=country;el('category').value=category;show()}
 function show(){var q=normalize(el('q').value),c=el('country').value,cat=el('category').value,found=[];for(var i=0;i<all.length;i++){var r=all[i];if(tab!=='all'&&!categoryMatch(r,tab))continue;if(c&&r.country!==c)continue;if(cat&&r.category!==cat)continue;if(onlyMine&&mine.indexOf(r)<0)continue;if(onlyFav&&favorites.indexOf(r.series_number)<0)continue;if(q&&normalize(r.name+' '+r.country+' '+r.category+' '+(r.ingredients||[]).join(' ')+' '+(r.note||'')).indexOf(q)<0)continue;found.push(r)}
-found.sort(function(a,b){return (a.reference_only?1:0)-(b.reference_only?1:0)});el('resultCount').textContent='Найдено '+found.length+' карточек · '+(mode?'Онлайн':'Офлайн');
+found.sort(function(a,b){return (a.reference_only?1:0)-(b.reference_only?1:0)});el('resultCount').textContent='В книге: '+found.length+' карточек · '+(mode?'Интернет-поиск доступен':'Офлайн');
 var out='';for(var j=0;j<Math.min(found.length,shown);j++){var a=found[j],k=kind(a),f=favorites.indexOf(a.series_number)>=0,p=a.photo&&/^data:image\/(jpeg|png|webp);base64,/.test(a.photo)&&a.photo.length<250000?a.photo:null;var illustration=window.VkusferaArt?window.VkusferaArt(a):picture(k);var fp=p||a.photo_file||illustration;
 out+='<div class="tile"><div class="tile-inner"><div class="art '+k+'">'+'<img src="'+escapeHtml(illustration)+'" alt="Иллюстрация рецепта" class="illustrated-cover">'+(p||a.photo_file?'<img class="actual-food-photo" src="'+escapeHtml(fp)+'" alt="Фото готового блюда" onerror="this.style.display=\'none\'">':'')+'<span class="photocaption">'+(p?'Ваше фото':a.photo_file?'Фото блюда':'Иллюстрация')+'</span>'+'<span class="tag">'+(a.series_number<0?'Мой рецепт':a.reference_only?'Справочник':'№ '+a.series_number)+'</span></div><div class="tile-body"><div class="source">'+escapeHtml(a.country)+' · '+escapeHtml(a.category)+'</div><h3>'+escapeHtml(a.name)+'</h3><p>◷ '+escapeHtml(a.time||'—')+' · '+escapeHtml(a.servings||'—')+'</p><div class="tile-foot"><button data-open="'+a.series_number+'">'+(a.reference_only?'Читать статью':'Смотреть рецепт')+'</button><button class="heart" data-fav="'+a.series_number+'">'+(f?'♥':'♡')+'</button></div></div></div></div>'}
 el('gallery').innerHTML=out||'<p style="padding:18px">Не найдено рецептов. Попробуйте другой запрос.</p>';el('moreBtn').style.display=shown<found.length?'block':'none'}
@@ -171,7 +174,7 @@ if(!write('rz_mine_v1',mine))return;closeOverlay('editor');refreshData();toast('
 function openEditor(r){editing=r?r.series_number:null;el('editorTitle').textContent=r?'Редактировать рецепт':'Новый рецепт';el('editName').value=r?r.name:'';el('editCountry').value=r?r.country:'';el('editCategory').value=r?r.category:'';el('editTime').value=r?r.time:'';el('editServings').value=r?r.servings:'';el('editIngredients').value=r?r.ingredients.join('\n'):'';el('editSteps').value=r?r.steps.join('\n'):'';el('editNote').value=r?r.note:'';photoBuffer=r&&r.photo?r.photo:'';imagePreview();closeOverlay('reader');el('editor').style.display='block'}
 function imagePreview(){el('photoPreview').style.display=photoBuffer?'block':'none';el('removePhoto').style.display=photoBuffer?'inline-block':'none';if(photoBuffer)el('photoPreview').src=photoBuffer}
 function toggleFav(id){id=Number(id);var i=favorites.indexOf(id);if(i>=0)favorites.splice(i,1);else favorites.push(id);write('rz_favorites_v1',favorites);show();if(active&&active.series_number===id)renderReader()}
-function updateModeLabel(){el('modeBtn').textContent=mode?'🌐 Онлайн':'📴 Офлайн';el('syncBtn').disabled=!mode;write('rz_online_v1',mode);show()}
+function updateModeLabel(){el('modeBtn').textContent=mode?'🌐 Google / онлайн':'📴 Офлайн';el('syncBtn').disabled=!mode;write('rz_online_v1',mode);show()}
 window.RezeptWorldReceiveUpdates=function(raw,error){if(!raw){toast(error||'Нет связи');return}try{var obj=JSON.parse(raw),rows=obj.recipes||[],known={};for(var i=0;i<base.length;i++)known[base[i].series_number]=true;for(var j=0;j<mine.length;j++)known[mine[j].series_number]=true;var clean=[];for(var k=0;k<rows.length&&k<1500;k++){var r=rows[k];if(!valid(r)||typeof r.series_number!=='number'||known[r.series_number])continue;if(r.ingredients.length>100||r.steps.length>100)continue;known[r.series_number]=true;clean.push(r)}remote=clean;write('rz_remote_v1',remote);refreshData();toast('Обновление: '+remote.length+' дополнительных рецептов')}catch(e){toast('Не удалось прочитать обновление')}};
 function sync(){if(!mode){toast('Включите онлайн-режим');return}toast('Проверяем новые рецепты…');if(window.RezeptWorldNative&&window.RezeptWorldNative.requestUpdates){window.RezeptWorldNative.requestUpdates();return}
 var xhr=new XMLHttpRequest();xhr.open('GET','https://raw.githubusercontent.com/RayZenGreallyzzz/Rezeptwold/main/recipes/updates.json',true);xhr.onreadystatechange=function(){if(xhr.readyState===4){if(xhr.status===200)window.RezeptWorldReceiveUpdates(xhr.responseText,null);else toast('Нет подключения')}};xhr.send()}
@@ -192,7 +195,7 @@ el('country').onchange=show;el('category').onchange=show;
 el('moreBtn').onclick=function(){shown+=24;show()};
 el('favBtn').onclick=function(){onlyFav=!onlyFav;onlyMine=false;el('favBtn').style.background=onlyFav?'#dceadd':'';el('mineBtn').style.background='';show()};
 el('mineBtn').onclick=function(){onlyMine=!onlyMine;onlyFav=false;el('mineBtn').style.background=onlyMine?'#dceadd':'';el('favBtn').style.background='';show()};
-el('modeBtn').onclick=function(){mode=!mode;updateModeLabel();if(mode)sync()};
+el('modeBtn').onclick=function(){setModeOnline(!mode)};
 el('syncBtn').onclick=sync;el('exportBtn').onclick=backup;el('importBtn').onclick=importBackup;
 el('backupFile').onchange=function(e){var f=e.target.files[0];if(!f)return;var r=new FileReader();r.onload=function(){window.RezeptWorldReceiveBackup(r.result)};r.readAsText(f)};
 el('reader').onclick=function(e){if(e.target===el('reader'))closeOverlay('reader')};
@@ -252,6 +255,18 @@ function renderHome(){
  updateHomeMode();
 }
 function updateHomeMode(){el('offlineMode').className=mode?'':'active';el('onlineMode').className=mode?'active':''}
+function updateGoogleUI(){el('homeGoogleBtn').style.display=mode?'inline-flex':'none';el('googlePanel').style.display=mode?'flex':'none';el('homeSearchHint').textContent=mode?'Введите блюдо: можно искать в книге или сразу в Google.':'Без интернета — поиск по сохранённым рецептам.'}
+function openGoogleSearch(raw){
+ var query=String(raw||'').replace(/\s+/g,' ').trim();
+ if(!mode){toast('Для поиска в Google включите режим Онлайн');return}
+ if(query.length<2){toast('Введите название блюда или ингредиенты');return}
+ if(query.length>350){toast('Запрос слишком длинный (не более 350 символов)');return}
+ if(window.RezeptWorldNative&&window.RezeptWorldNative.searchGoogle){window.RezeptWorldNative.searchGoogle(query);return}
+ var link='https://www.google.com/search?hl=ru&q='+encodeURIComponent(query+' рецепт ингредиенты пошаговое приготовление');
+ window.open(link,'_blank','noopener,noreferrer');
+}
+function searchBook(raw){var query=String(raw||'').trim();browse('all','Поиск в книге');el('q').value=query;shown=24;show()}
+
 function navigate(v){
  currentView=v;
  ['homeScreen','browseScreen','countryScreen','extraScreen'].forEach(function(id){el(id).style.display='none'});
@@ -283,10 +298,15 @@ function showFav(){browse('all','Избранные рецепты');el('favBtn'
 function countryFlag(n){var f={'Италия':'🇮🇹','Франция':'🇫🇷','Грузия':'🇬🇪','Германия':'🇩🇪','Испания':'🇪🇸','Япония':'🇯🇵','Китай':'🇨🇳','Индия':'🇮🇳','Турция':'🇹🇷','США':'🇺🇸','Украина':'🇺🇦','Греция':'🇬🇷','Мексика':'🇲🇽','Корея':'🇰🇷','Таиланд':'🇹🇭','Вьетнам':'🇻🇳','Португалия':'🇵🇹','Египет':'🇪🇬','Бразилия':'🇧🇷','Марокко':'🇲🇦','Аргентина':'🇦🇷','Польша':'🇵🇱'};return f[n]||'🌍'}
 function renderCountries(){var cs={},names=[],query=normalize(el('countrySearch').value);for(var i=0;i<all.length;i++){var x=all[i].country;cs[x]=(cs[x]||0)+1}names=Object.keys(cs).sort();var o='';for(var i=0;i<names.length;i++){var n=names[i];if(query&&normalize(n).indexOf(query)<0)continue;o+='<div class="countrycell"><button data-country="'+escapeHtml(n)+'"><span class="flag">'+countryFlag(n)+'</span><span class="country-title">'+escapeHtml(n)+'<small>'+cs[n]+' рецептов</small></span><span>›</span></button></div>'}el('countriesList').innerHTML=o||'<p>Страна не найдена.</p>'}
 function openCountry(c){browse('all',c);el('country').value=c;show()}
-function setModeOnline(val){mode=val;updateModeLabel();updateHomeMode();if(mode)sync()}
+function setModeOnline(val){mode=!!val;updateModeLabel();updateHomeMode();updateGoogleUI();if(mode)toast('Онлайн включён: ищите блюда в Google')}
 el('homeCategories').onclick=function(e){var n=e.target;while(n&&n!==el('homeCategories')&&!n.getAttribute('data-catid'))n=n.parentNode;if(n&&n.getAttribute('data-catid')){var id=n.getAttribute('data-catid'),name='Рецепты';for(var i=0;i<menuCategories.length;i++)if(menuCategories[i][0]===id)name=menuCategories[i][1];selectMenu(id,name)}};
 el('homeFeatured').onclick=function(e){var n=e.target;while(n&&n!==el('homeFeatured')&&!n.getAttribute('data-rid'))n=n.parentNode;if(n&&n.getAttribute('data-rid'))openRecipe(n.getAttribute('data-rid'))};
-el('homeSearch').oninput=function(){el('q').value=el('homeSearch').value;tab='all';onlyFav=false;onlyMine=false;el('browseTitle').textContent='Поиск рецептов';show();navigate('browse')};
+el('homeSearch').onkeydown=function(e){if(e.key==='Enter'){e.preventDefault();if(mode)openGoogleSearch(el('homeSearch').value);else searchBook(el('homeSearch').value)}};
+el('homeBookBtn').onclick=function(){searchBook(el('homeSearch').value)};
+el('homeGoogleBtn').onclick=function(){openGoogleSearch(el('homeSearch').value)};
+el('googleSearchBtn').onclick=function(){openGoogleSearch(el('q').value)};
+el('q').onkeydown=function(e){if(e.key==='Enter'&&mode){e.preventDefault();openGoogleSearch(el('q').value)}};
+
 el('offlineMode').onclick=function(){setModeOnline(false)};
 el('onlineMode').onclick=function(){setModeOnline(true)};
 el('exploreAll').onclick=function(){browse('all','Все рецепты')};
@@ -302,6 +322,7 @@ el('extraExport').onclick=function(){backup()};
 el('extraImport').onclick=function(){importBackup()};
 el('extraCountries').onclick=function(){renderCountries();navigate('countries')};
 el('extraOffline').onclick=function(){setModeOnline(!mode)};
+el('extraGoogle').onclick=function(){if(!mode)setModeOnline(true);browse('all','Поиск в Google');el('q').focus()};
 window.VkusferaBack=function(){
  if(el('editor').style.display==='block'){closeOverlay('editor');return true}
  if(el('reader').style.display==='block'){closeOverlay('reader');return true}
@@ -316,7 +337,7 @@ el('moreCountries').onclick=function(){el('countrySearch').value='';renderCountr
 el('countrySearch').oninput=renderCountries;
 el('magSpirits').onclick=function(e){var n=e.target;while(n&&n!==el('magSpirits')&&!n.getAttribute('data-alcohol'))n=n.parentNode;if(!n||!n.getAttribute('data-alcohol'))return;var k=n.getAttribute('data-alcohol');browse(k,n.innerText||n.textContent)};
 el('magCountriesQuick').onclick=function(e){var n=e.target;while(n&&n!==el('magCountriesQuick')&&!n.getAttribute('data-countryquick'))n=n.parentNode;if(n&&n.getAttribute('data-countryquick'))openCountry(n.getAttribute('data-countryquick'))};
-renderHome();buildMagazineNav();navigate('home');
+renderHome();buildMagazineNav();updateGoogleUI();navigate('home');
 
 })();
 </script></body></html>
