@@ -222,7 +222,7 @@ var menuCategories=[
  ['mine','Моё меню','＋','other']
 ];
 var photos={countries:'feast.jpg',baking:'baking.jpg',dessert:'dessert.jpg',soup:'soup.jpg',meat:'meat.jpg',fish:'fish.jpg',salad:'salad.jpg',side:'feast.jpg',sauce:'salad.jpg',drinks:'drinks.jpg',wine:'spirits.jpg',preserve:'preserve.jpg',distill:'spirits.jpg',cocktail:'drinks.jpg',jam:'preserve.jpg',mine:'feast.jpg',main:'meat.jpg',whisky:'spirits.jpg',gin:'spirits.jpg',rum:'spirits.jpg',brandy:'spirits.jpg',liqueur:'spirits.jpg',other:'feast.jpg'};
-function picture(k){return 'img/'+(photos[k]||'feast.jpg')}
+function picture(k){return 'img/'+((photos&&photos[k])||'feast.jpg')}
 function categoryMatch(r,k){
  var n=normalize(r.category+' '+r.name);
  if(k==='countries'||k==='all')return true;
