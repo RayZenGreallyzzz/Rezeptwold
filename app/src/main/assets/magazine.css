@@ -71,3 +71,12 @@ header {background:#10140f!important;border-bottom:1px solid #5c472f!important}
 .mag-spirit-list button{padding:8px;gap:7px}
 .mag-spirit-list button span{font-size:23px}
 }
+
+/* Individually illustrated recipe covers; exact photos only when provided */
+.art .illustrated-cover {position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:1;z-index:0}
+.art .actual-food-photo {position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:1;z-index:1}
+.art .photocaption {z-index:2;bottom:7px;left:8px;font-size:10px;background:#0c0e0ccc;border:1px solid #a789594f;letter-spacing:.2px}
+.art .tag {z-index:3}
+.quickrecipe .thumb img {position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:1}
+.quickrecipe .thumb {overflow:hidden}
+.maghero img[src^="data:image/svg"] {object-fit:cover}
