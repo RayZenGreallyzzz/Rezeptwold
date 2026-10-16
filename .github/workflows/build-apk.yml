@@ -42,6 +42,14 @@ jobs:
           curl -fLsS --max-time 20 --retry 1 "https://images.unsplash.com/photo-1513558161293-cdaf765edfd7?w=460&h=260&fit=crop&q=65" -o "app/src/main/assets/img/drinks.jpg" || echo "Image drinks unavailable; fallback will be used"
           curl -fLsS --max-time 20 --retry 1 "https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=460&h=260&fit=crop&q=65" -o "app/src/main/assets/img/spirits.jpg" || echo "Image spirits unavailable; fallback will be used"
           curl -fLsS --max-time 20 --retry 1 "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=460&h=260&fit=crop&q=65" -o "app/src/main/assets/img/preserve.jpg" || echo "Image preserve unavailable; fallback will be used"
+      - name: Bundle featured dish photos
+        run: |
+          mkdir -p app/src/main/assets/img/dishes
+          curl -fLsS --max-time 25 --retry 1 "https://images.unsplash.com/photo-1630684789391-d59419768fb1?w=700&h=460&fit=crop&q=68" -o "app/src/main/assets/img/dishes/525.jpg" || echo "Optional dish photo 525 unavailable"
+          curl -fLsS --max-time 25 --retry 1 "https://images.unsplash.com/photo-1758714068469-75887ca0b8c3?w=700&h=460&fit=crop&q=68" -o "app/src/main/assets/img/dishes/526.jpg" || echo "Optional dish photo 526 unavailable"
+          curl -fLsS --max-time 25 --retry 1 "https://images.unsplash.com/photo-1757124034578-2ec0f0843fcc?w=700&h=460&fit=crop&q=68" -o "app/src/main/assets/img/dishes/527.jpg" || echo "Optional dish photo 527 unavailable"
+          curl -fLsS --max-time 25 --retry 1 "https://images.unsplash.com/photo-1709429790175-b02bb1b19207?w=700&h=460&fit=crop&q=68" -o "app/src/main/assets/img/dishes/531.jpg" || echo "Optional dish photo 531 unavailable"
+          find app/src/main/assets/img/dishes -type f -name "*.jpg" -size -3k -delete
       - name: Validate offline recipes
         run: python3 tools/validate_catalog.py
       - name: Build compatible debug APK
