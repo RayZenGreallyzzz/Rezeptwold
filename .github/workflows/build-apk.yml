@@ -29,6 +29,19 @@ jobs:
           echo "Using SDK manager: $SDKMANAGER"
           yes | "$SDKMANAGER" --sdk_root="$ANDROID_HOME" --licenses >/dev/null || true
           "$SDKMANAGER" --sdk_root="$ANDROID_HOME" --install "platforms;android-34" "build-tools;34.0.0"
+      - name: Bundle offline food photography
+        run: |
+          mkdir -p app/src/main/assets/img
+          curl -fLsS --max-time 20 --retry 1 "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=460&h=260&fit=crop&q=65" -o "app/src/main/assets/img/feast.jpg" || echo "Image feast unavailable; fallback will be used"
+          curl -fLsS --max-time 20 --retry 1 "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=460&h=260&fit=crop&q=65" -o "app/src/main/assets/img/baking.jpg" || echo "Image baking unavailable; fallback will be used"
+          curl -fLsS --max-time 20 --retry 1 "https://images.unsplash.com/photo-1488477181946-6428a0291777?w=460&h=260&fit=crop&q=65" -o "app/src/main/assets/img/dessert.jpg" || echo "Image dessert unavailable; fallback will be used"
+          curl -fLsS --max-time 20 --retry 1 "https://images.unsplash.com/photo-1547592180-85f173990554?w=460&h=260&fit=crop&q=65" -o "app/src/main/assets/img/soup.jpg" || echo "Image soup unavailable; fallback will be used"
+          curl -fLsS --max-time 20 --retry 1 "https://images.unsplash.com/photo-1544025162-d76694265947?w=460&h=260&fit=crop&q=65" -o "app/src/main/assets/img/meat.jpg" || echo "Image meat unavailable; fallback will be used"
+          curl -fLsS --max-time 20 --retry 1 "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=460&h=260&fit=crop&q=65" -o "app/src/main/assets/img/fish.jpg" || echo "Image fish unavailable; fallback will be used"
+          curl -fLsS --max-time 20 --retry 1 "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=460&h=260&fit=crop&q=65" -o "app/src/main/assets/img/salad.jpg" || echo "Image salad unavailable; fallback will be used"
+          curl -fLsS --max-time 20 --retry 1 "https://images.unsplash.com/photo-1513558161293-cdaf765edfd7?w=460&h=260&fit=crop&q=65" -o "app/src/main/assets/img/drinks.jpg" || echo "Image drinks unavailable; fallback will be used"
+          curl -fLsS --max-time 20 --retry 1 "https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=460&h=260&fit=crop&q=65" -o "app/src/main/assets/img/spirits.jpg" || echo "Image spirits unavailable; fallback will be used"
+          curl -fLsS --max-time 20 --retry 1 "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=460&h=260&fit=crop&q=65" -o "app/src/main/assets/img/preserve.jpg" || echo "Image preserve unavailable; fallback will be used"
       - name: Build compatible debug APK
         run: gradle --no-daemon :app:assembleDebug
       - name: Upload APK
