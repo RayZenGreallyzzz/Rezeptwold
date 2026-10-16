@@ -52,6 +52,8 @@ jobs:
           find app/src/main/assets/img/dishes -type f -name "*.jpg" -size -3k -delete
       - name: Validate offline recipes
         run: python3 tools/validate_catalog.py
+      - name: Validate unique recipe cover artwork
+        run: node tools/validate_art.js
       - name: Build compatible debug APK
         run: gradle --no-daemon :app:assembleDebug
       - name: Upload APK
