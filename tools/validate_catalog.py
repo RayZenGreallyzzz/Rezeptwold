@@ -36,4 +36,6 @@ for name in ("prep","mix","cook","bake","ferment","serve","knead"):
 assert "id=\"homeCountry\"" in page and "id=\"magSpirits\"" in page
 assert "photos&&photos[k]" in page, "Guard before category photo initialization"
 assert len([r for r in records if r.get("magazine")])>=15
+assert (assets/"recipe-art.js").exists(), "Missing individual cover generator"
+assert '<script src="recipe-art.js"></script>' in page, "Cover generator not loaded"
 print(f"Validated: {len(records)} cards, {len(extra)} expansion cards, {sum(x.get('reference_only',False) for x in records)} guides, remaining are measured recipes.")
