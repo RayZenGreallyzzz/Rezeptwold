@@ -1,0 +1,1 @@
+window.VKUSFERA_AVAILABLE_PHOTOS=[];
