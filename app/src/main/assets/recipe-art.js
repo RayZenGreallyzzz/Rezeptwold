@@ -67,7 +67,7 @@ return h;
 function bowlFood(r,pal){
 var h=ellipse(259,282,160,22,'#06100b89')+path('M109 166Q111 282 255 292Q402 285 408 166Z','#c9bb9c','stroke="#d6c1a5" stroke-width="8"')+ellipse(258,167,151,76,'#f6ead2','stroke="#ded0b4" stroke-width="10"')+ellipse(260,167,130,60,pal[0],'stroke="'+pal[2]+'" stroke-width="6"');
 for(var i=0;i<16;i++){var a=r()*6.28,rad=Math.sqrt(r())*117,x=260+Math.cos(a)*rad,y=167+Math.sin(a)*rad*.48,sz=5+r()*12;
-h+=i%3===0?leaf(x,y,sz,Math.floor(r()*360),'#79a04b'):i%3===1?ellipse(x,y,sz*1.5,sz*.68,pal[1],'transform="rotate('+Math.floor(r()*180)+' '+x+' '+y+')"'):circ(x,y,sz,pal[2],'stroke="#e0bd76" stroke-width="2"');}
+h+=i%3===0?leaf(x,y,sz,Math.floor(r()*360),'#79a04b'):i%3===1?ellipse(x,y,sz*1.5,sz*.68,pal[1],'transform="rotate('+Math.floor(r()*180)+' '+x+' '+y+')"'):circ(x,y,sz,pal[2],'#e0bd76',2);}
 h+=path('M164 82q-16-27 4-53m70 47q18-24 2-51m66 52q-11-22 6-47','none','stroke="#f8ead0" stroke-width="9" opacity=".35" stroke-linecap="round"');
 return h;
 }
