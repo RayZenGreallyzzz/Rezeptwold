@@ -230,7 +230,7 @@ function categoryMatch(r,k){
  if(k==='fish')return /рыб|морепродукт|кревет|кальмар|лосос|тунец/.test(n);
  if(k==='side')return /гарнир|рис|картоф|круп|пюре|овощ/.test(n);
  if(k==='jam')return /варень|джем|повидло|цукат|конфитюр/.test(n);
- if(k==='cocktail')return /коктейл/.test(n);if(k==='wine')return ['distill','whisky','gin','rum','brandy','liqueur','cocktail','wine'].indexOf(kind(r))>=0;
+ if(k==='viniculture')return /вино|винодел|сидр|перри|пиво|медовух|мид|пивовар/.test(n);if(k==='cocktail')return /коктейл/.test(n);if(k==='wine')return ['distill','whisky','gin','rum','brandy','liqueur','cocktail','wine'].indexOf(kind(r))>=0;
  return kind(r)===k;
 }
 function countCategory(k){if(k==='mine')return mine.length;var n=0;for(var i=0;i<all.length;i++)if(categoryMatch(all[i],k))n++;return n}
@@ -238,15 +238,15 @@ function renderHome(){
  var out='';
  for(var i=0;i<menuCategories.length;i++){
   var c=menuCategories[i];
-  out+='<div class="homecell"><button class="homecard" data-catid="'+c[0]+'"><img src="'+picture(c[0])+'" onerror="this.style.display=\'none\'" alt=""><span class="emoji">'+c[2]+'</span><span class="name">'+c[1]+'</span></button></div>';
+  out+='<div class="homecell"><button class="homecard" data-catid="'+c[0]+'"><img src="'+picture(c[0])+'" onerror="this.style.display=\'none\'" alt=""><span class="emoji">'+c[2]+'</span><span class="name">'+c[1]+'</span><small class="category-count">'+countCategory(c[0])+' рецептов</small></button></div>';
  }
  el('homeCategories').innerHTML=out;
  el('sectionCount').textContent=all.filter(function(r){return !r.reference_only}).length+' рецептов';
- var pick=[1,2,7,30,80,150,201,220,309,350],feat='';
+ var pick=[525,526,527,531,528,529,532,536,201,350],feat='';
  for(var j=0;j<pick.length;j++){
   var r=findRecipe(pick[j]);if(!r)continue;
   var k=kind(r);
-  feat+='<button class="quickrecipe" data-rid="'+r.series_number+'"><span class="thumb"><img src="'+picture(k)+'" onerror="this.style.display=\'none\'" alt=""><span style="position:relative;text-shadow:0 2px 4px #000">'+icon(k)+'</span></span><strong>'+escapeHtml(r.name)+'</strong><small>'+escapeHtml(r.country)+'</small></button>';
+  feat+='<button class="quickrecipe" data-rid="'+r.series_number+'"><span class="thumb"><img src="'+(r.photo_file||picture(k))+'" onerror="this.style.display=\'none\'" alt=""><span style="position:relative;text-shadow:0 2px 4px #000">'+icon(k)+'</span></span><strong>'+escapeHtml(r.name)+'</strong><small>'+escapeHtml(r.country)+'</small></button>';
  }
  el('homeFeatured').innerHTML=feat;
  updateHomeMode();
@@ -308,7 +308,15 @@ window.VkusferaBack=function(){
  if(currentView!=='home'){navigate('home');return true}
  return false
 };
-renderHome();navigate('home');
+function buildMagazineNav(){var cs={};for(var i=0;i<all.length;i++){var k=all[i].country;cs[k]=(cs[k]||0)+1}var names=Object.keys(cs).sort(),opt='<option value="">Все кухни мира</option>';for(var i=0;i<names.length;i++)opt+='<option value="'+escapeHtml(names[i])+'">'+countryFlag(names[i])+' '+escapeHtml(names[i])+'</option>';el('homeCountry').innerHTML=opt;
+var spirits=[['distill','Самогоноварение','⚗️'],['whisky','Виски','🥃'],['gin','Джин','🍸'],['rum','Ром','🍹'],['brandy','Бренди','🍇'],['liqueur','Настойки и ликёры','🍒'],['cocktail','Коктейли','🍸'],['viniculture','Вино, пиво и сидр','🍷']];var out='';for(var i=0;i<spirits.length;i++){var a=spirits[i];out+='<button data-alcohol="'+a[0]+'"><span>'+a[2]+'</span><span><b>'+a[1]+'</b><small>'+countCategory(a[0])+' карточек</small></span></button>'}el('magSpirits').innerHTML=out;
+var quick=['Италия','Франция','Грузия','Германия','Япония','Китай','Украина','Испания'],q='';for(var i=0;i<quick.length;i++){var n=quick[i];if(!cs[n])continue;q+='<button data-countryquick="'+escapeHtml(n)+'"><span>'+countryFlag(n)+'</span>'+escapeHtml(n)+'<small>'+cs[n]+' рецептов</small></button>'}el('magCountriesQuick').innerHTML=q;}
+el('homeCountryBtn').onclick=function(){var c=el('homeCountry').value;if(c)openCountry(c);else{el('countrySearch').value='';renderCountries();navigate('countries')}};
+el('moreCountries').onclick=function(){el('countrySearch').value='';renderCountries();navigate('countries')};
+el('countrySearch').oninput=renderCountries;
+el('magSpirits').onclick=function(e){var n=e.target;while(n&&n!==el('magSpirits')&&!n.getAttribute('data-alcohol'))n=n.parentNode;if(!n||!n.getAttribute('data-alcohol'))return;var k=n.getAttribute('data-alcohol');browse(k,n.innerText||n.textContent)};
+el('magCountriesQuick').onclick=function(e){var n=e.target;while(n&&n!==el('magCountriesQuick')&&!n.getAttribute('data-countryquick'))n=n.parentNode;if(n&&n.getAttribute('data-countryquick'))openCountry(n.getAttribute('data-countryquick'))};
+renderHome();buildMagazineNav();navigate('home');
 
 })();
 </script></body></html>
