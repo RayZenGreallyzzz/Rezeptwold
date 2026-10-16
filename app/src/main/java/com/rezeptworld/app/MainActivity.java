@@ -112,6 +112,34 @@ public class MainActivity extends Activity {
             return getSharedPreferences("vkusfera_settings", MODE_PRIVATE)
                    .edit().putString(key, value).commit();
         }
+        @JavascriptInterface public void searchGoogle(String rawQuery) {
+            if (rawQuery == null) return;
+            final String query = rawQuery.trim().replaceAll("\\s+", " ");
+            if (query.length() < 2 || query.length() > 350) {
+                runOnUiThread(() ->
+                    Toast.makeText(MainActivity.this, "Введите название блюда (2–350 символов)", Toast.LENGTH_SHORT).show());
+                return;
+            }
+            runOnUiThread(() -> {
+                try {
+                    Uri googleUri = new Uri.Builder()
+                        .scheme("https")
+                        .authority("www.google.com")
+                        .path("/search")
+                        .appendQueryParameter("q", query + " рецепт ингредиенты пошаговое приготовление")
+                        .appendQueryParameter("hl", "ru")
+                        .build();
+                    Intent browser = new Intent(Intent.ACTION_VIEW, googleUri);
+                    browser.addCategory(Intent.CATEGORY_BROWSABLE);
+                    startActivity(browser);
+                } catch (ActivityNotFoundException e) {
+                    Toast.makeText(MainActivity.this, "Установите браузер для поиска Google", Toast.LENGTH_LONG).show();
+                } catch (Exception e) {
+                    Toast.makeText(MainActivity.this, "Не удалось открыть Google", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
         @JavascriptInterface public void requestUpdates() {
             new Thread(() -> {
                 HttpURLConnection conn = null;
