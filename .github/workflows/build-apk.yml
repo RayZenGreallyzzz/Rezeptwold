@@ -42,6 +42,8 @@ jobs:
           curl -fLsS --max-time 20 --retry 1 "https://images.unsplash.com/photo-1513558161293-cdaf765edfd7?w=460&h=260&fit=crop&q=65" -o "app/src/main/assets/img/drinks.jpg" || echo "Image drinks unavailable; fallback will be used"
           curl -fLsS --max-time 20 --retry 1 "https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=460&h=260&fit=crop&q=65" -o "app/src/main/assets/img/spirits.jpg" || echo "Image spirits unavailable; fallback will be used"
           curl -fLsS --max-time 20 --retry 1 "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=460&h=260&fit=crop&q=65" -o "app/src/main/assets/img/preserve.jpg" || echo "Image preserve unavailable; fallback will be used"
+      - name: Validate offline recipes
+        run: python3 tools/validate_catalog.py
       - name: Build compatible debug APK
         run: gradle --no-daemon :app:assembleDebug
       - name: Upload APK
