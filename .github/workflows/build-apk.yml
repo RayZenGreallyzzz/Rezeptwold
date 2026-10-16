@@ -54,6 +54,8 @@ jobs:
         run: python3 tools/validate_catalog.py
       - name: Validate unique recipe cover artwork
         run: node tools/validate_art.js
+      - name: Validate online Google and offline recipe search
+        run: node tools/validate_google_search.js
       - name: Build compatible debug APK
         run: gradle --no-daemon :app:assembleDebug
       - name: Upload APK
