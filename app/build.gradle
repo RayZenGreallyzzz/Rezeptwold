@@ -6,8 +6,8 @@ android {
         applicationId 'com.rezeptworld.app'
         minSdk 21
         targetSdk 28
-        versionCode 7
-        versionName '0.6.0'
+        versionCode 8
+        versionName '0.6.1'
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
