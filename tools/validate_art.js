@@ -15,6 +15,7 @@ const sources=[
   ['world-main-1.js','VKUSFERA_WORLD_B'],
   ['world-drinks-preserves-1.js','VKUSFERA_WORLD_C'],
   ['journal-recipes.js','VKUSFERA_JOURNAL'],
+  ['extra-cuisines-1.js','VKUSFERA_EXTRA'],
 ];
 for (const [filename,variable] of sources) {
   const src=fs.readFileSync(path.join(root,filename),'utf8').trim();
