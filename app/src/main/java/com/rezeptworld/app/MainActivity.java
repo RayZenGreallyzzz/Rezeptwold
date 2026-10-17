@@ -15,6 +15,10 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
+import android.util.Base64;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileInputStream;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -112,6 +116,57 @@ public class MainActivity extends Activity {
             return getSharedPreferences("vkusfera_settings", MODE_PRIVATE)
                    .edit().putString(key, value).commit();
         }
+        // One compressed JPEG for each recipe. IDs are numeric strings (personal IDs may exceed int).
+        private File dishPhotoFile(String key) {
+            if (key == null || !key.matches("-?[0-9]{1,18}")) return null;
+            File dir = new File(getFilesDir(), "dish_photos");
+            return new File(dir, "r_" + key + ".jpg");
+        }
+
+        @JavascriptInterface public boolean hasDishPhoto(String key) {
+            File file = dishPhotoFile(key);
+            return file != null && file.isFile() && file.length() > 0 && file.length() <= 500000;
+        }
+
+        @JavascriptInterface public String getDishPhoto(String key) {
+            File file = dishPhotoFile(key);
+            if (file == null || !file.isFile() || file.length() == 0 || file.length() > 500000) return "";
+            try {
+                byte[] data = new byte[(int) file.length()];
+                try (FileInputStream in = new FileInputStream(file)) {
+                    int pos=0,n;
+                    while (pos<data.length && (n=in.read(data,pos,data.length-pos))!=-1) pos+=n;
+                    if (pos!=data.length) return "";
+                }
+                return "data:image/jpeg;base64," + Base64.encodeToString(data, Base64.NO_WRAP);
+            } catch (Exception ignored) { return ""; }
+        }
+
+        @JavascriptInterface public boolean saveDishPhoto(String key, String dataUri) {
+            File file=dishPhotoFile(key);
+            if (file == null || dataUri == null || !dataUri.startsWith("data:image/jpeg;base64,")
+                || dataUri.length()>680000) return false;
+            try {
+                byte[] bytes=Base64.decode(dataUri.substring("data:image/jpeg;base64,".length()),Base64.DEFAULT);
+                if (bytes.length<800 || bytes.length>500000 || (bytes[0]&255)!=255 || (bytes[1]&255)!=216) return false;
+                File dir=file.getParentFile();
+                if (!dir.isDirectory() && !dir.mkdirs()) return false;
+                File tmp=new File(dir,file.getName()+".tmp");
+                try (FileOutputStream out=new FileOutputStream(tmp)) {
+                    out.write(bytes);
+                    out.flush();
+                }
+                if (file.exists() && !file.delete()) { tmp.delete(); return false; }
+                if (!tmp.renameTo(file)) { tmp.delete(); return false; }
+                return true;
+            } catch (Exception e) { return false; }
+        }
+
+        @JavascriptInterface public boolean deleteDishPhoto(String key) {
+            File file=dishPhotoFile(key);
+            return file != null && (!file.exists() || file.delete());
+        }
+
         @JavascriptInterface public void searchGoogle(String rawQuery) {
             if (rawQuery == null) return;
             final String query = rawQuery.trim().replaceAll("\\s+", " ");
