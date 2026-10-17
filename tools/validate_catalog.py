@@ -7,7 +7,7 @@ m=re.search(r'<script type="application/json" id="baseRecipes">([\s\S]*?)</scrip
 assert m, "base recipes not embedded"
 base=json.loads(m.group(1))
 extra=[]
-for filename,var in [("iba-cocktails.js","VKUSFERA_IBA"),("alcohol-recipes.js","VKUSFERA_ALCOHOL"),("world-baking-1.js","VKUSFERA_WORLD_A"),("world-main-1.js","VKUSFERA_WORLD_B"),("world-drinks-preserves-1.js","VKUSFERA_WORLD_C"),("journal-recipes.js","VKUSFERA_JOURNAL")]:
+for filename,var in [("iba-cocktails.js","VKUSFERA_IBA"),("alcohol-recipes.js","VKUSFERA_ALCOHOL"),("world-baking-1.js","VKUSFERA_WORLD_A"),("world-main-1.js","VKUSFERA_WORLD_B"),("world-drinks-preserves-1.js","VKUSFERA_WORLD_C"),("journal-recipes.js","VKUSFERA_JOURNAL"),("extra-cuisines-1.js","VKUSFERA_EXTRA")]:
     assert f'src="{filename}"' in page, "Missing external script "+filename
     raw=(assets/filename).read_text(encoding="utf-8").strip()
     prefix="window."+var+"="
@@ -18,7 +18,7 @@ ids=[r["series_number"] for r in records]
 assert len(ids)==len(set(ids)), "Duplicate IDs"
 names=[re.sub(r"\\s+"," ",r["name"].lower().strip().replace("ё","е")) for r in records]
 assert len(names)==len(set(names)), "Duplicate recipe names"
-assert len(base)==332 and len(extra)==207 and len(records)==539, "Catalog unexpectedly truncated"
+assert len(base)==332 and len(extra)==247 and len(records)==579, "Catalog unexpectedly truncated"
 assert ids==list(range(1,len(records)+1)), "Gap in recipe identifiers"
 for r in records:
     assert r.get("name") and r.get("country") and r.get("category"),f"missing metadata in {r['series_number']}"
@@ -29,7 +29,7 @@ for r in records:
     url=r.get("source_url")
     assert not url or url.startswith("https://"),f"unsafe source URL {r['series_number']}"
 assert "var base=JSON.parse" in page and "VKUSFERA_ALCOHOL" in page
-assert "VKUSFERA_WORLD_A" in page and "VKUSFERA_WORLD_B" in page and "VKUSFERA_WORLD_C" in page and "VKUSFERA_JOURNAL" in page
+assert "VKUSFERA_WORLD_A" in page and "VKUSFERA_WORLD_B" in page and "VKUSFERA_WORLD_C" in page and "VKUSFERA_JOURNAL" in page and "VKUSFERA_EXTRA" in page
 assert sum(x.get("reference_only",False) for x in records)==10
 for name in ("prep","mix","cook","bake","ferment","serve","knead"):
     assert (assets/"steps"/(name+".svg")).exists(), "Missing step art: "+name
