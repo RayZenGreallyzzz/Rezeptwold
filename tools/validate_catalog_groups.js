@@ -12,22 +12,23 @@ const inputs=[
 ['world-baking-1.js','VKUSFERA_WORLD_A'],
 ['world-main-1.js','VKUSFERA_WORLD_B'],
 ['world-drinks-preserves-1.js','VKUSFERA_WORLD_C'],
-['journal-recipes.js','VKUSFERA_JOURNAL']
+['journal-recipes.js','VKUSFERA_JOURNAL'],
+['extra-cuisines-1.js','VKUSFERA_EXTRA']
 ];
 for(const [file,name] of inputs){
  const src=fs.readFileSync(path.join(root,file),'utf8').trim();
  assert(src.startsWith('window.'+name+'=')&&src.endsWith(';'),file);
  recipes.push(...JSON.parse(src.slice(('window.'+name+'=').length,-1)));
 }
-assert.strictEqual(recipes.length,539,'Catalog shrank');
-assert.strictEqual(recipes.filter(r=>!r.reference_only).length,529,'Actual recipe count changed');
-assert.strictEqual(new Set(recipes.map(r=>r.series_number)).size,539,'Duplicate IDs');
+assert.strictEqual(recipes.length,579,'Catalog shrank');
+assert.strictEqual(recipes.filter(r=>!r.reference_only).length,569,'Actual recipe count changed');
+assert.strictEqual(new Set(recipes.map(r=>r.series_number)).size,579,'Duplicate IDs');
 const w={};vm.runInNewContext(fs.readFileSync(path.join(root,'recipe-groups.js'),'utf8'),{window:w});
 assert(w.VkusferaGroups,'Group classifier missing');
 const g=w.VkusferaGroups;
 const count=k=>recipes.filter(x=>g.matches(x,k)).length;
-assert.strictEqual(count('all'),539,'All recipes must be visible');
-for(const [k,min] of Object.entries({baking:140,dessert:50,soup:24,drinks:35,alcohol:110,cocktail:50,main:105,preserve:40})){
+assert.strictEqual(count('all'),579,'All recipes must be visible');
+for(const [k,min] of Object.entries({baking:140,dessert:50,soup:30,drinks:35,alcohol:110,cocktail:50,main:110,preserve:40})){
  assert(count(k)>=min,'Incomplete '+k+': '+count(k));
 }
 assert(recipes.filter(r=>/безалкогол/i.test(r.category)).every(r=>!g.matches(r,'alcohol')),'Soft drinks leak into alcohol');
