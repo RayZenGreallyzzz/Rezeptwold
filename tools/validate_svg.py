@@ -8,7 +8,7 @@ if len(sys.argv) != 2:
     raise SystemExit("Usage: python3 tools/validate_svg.py DIRECTORY")
 root = Path(sys.argv[1])
 files = sorted(root.glob("*.svg"))
-assert len(files) == 539, f"Expected 539 SVG covers, found {len(files)}"
+assert len(files) == 579, f"Expected 579 SVG covers, found {len(files)}"
 for filepath in files:
     try:
         element = ET.parse(filepath).getroot()
