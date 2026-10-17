@@ -19,6 +19,10 @@ import android.util.Base64;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileInputStream;
+import java.io.OutputStream;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
+import java.util.zip.ZipOutputStream;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -34,6 +38,8 @@ import java.nio.charset.StandardCharsets;
 public class MainActivity extends Activity {
     private static final int PICK_IMAGE = 401;
     private static final int PICK_BACKUP = 402;
+    private static final int EXPORT_DISH_PHOTOS = 403;
+    private static final int IMPORT_DISH_PHOTOS = 404;
     private static final int MAX_UPDATE_BYTES = 3 * 1024 * 1024;
     private static final String UPDATES_URL =
         "https://raw.githubusercontent.com/RayZenGreallyzzz/Rezeptwold/main/recipes/updates.json";
@@ -167,6 +173,33 @@ public class MainActivity extends Activity {
             return file != null && (!file.exists() || file.delete());
         }
 
+        @JavascriptInterface public void exportDishPhotos() {
+            runOnUiThread(() -> {
+                try {
+                    Intent intent=new Intent(Intent.ACTION_CREATE_DOCUMENT);
+                    intent.addCategory(Intent.CATEGORY_OPENABLE);
+                    intent.setType("application/zip");
+                    intent.putExtra(Intent.EXTRA_TITLE, "Vkusfera-my-dish-photos.zip");
+                    startActivityForResult(intent, EXPORT_DISH_PHOTOS);
+                } catch (Exception e) {
+                    Toast.makeText(MainActivity.this, "Не удалось открыть сохранение фото", Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+
+        @JavascriptInterface public void importDishPhotos() {
+            runOnUiThread(() -> {
+                try {
+                    Intent intent=new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                    intent.addCategory(Intent.CATEGORY_OPENABLE);
+                    intent.setType("application/zip");
+                    startActivityForResult(intent, IMPORT_DISH_PHOTOS);
+                } catch (Exception e) {
+                    Toast.makeText(MainActivity.this, "Не удалось выбрать архив фото", Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+
         @JavascriptInterface public void searchGoogle(String rawQuery) {
             if (rawQuery == null) return;
             final String query = rawQuery.trim().replaceAll("\\s+", " ");
@@ -261,6 +294,60 @@ public class MainActivity extends Activity {
                 imageCallback.onReceiveValue(result);
                 imageCallback = null;
             }
+        } else if (requestCode == EXPORT_DISH_PHOTOS && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            final Uri uri=data.getData();
+            new Thread(() -> {
+                int count=0;
+                try (OutputStream raw=getContentResolver().openOutputStream(uri);
+                     ZipOutputStream out=new ZipOutputStream(raw)) {
+                    File dir=new File(getFilesDir(),"dish_photos");
+                    File[] photos=dir.listFiles();
+                    if (photos!=null) for (File file:photos) {
+                        if (!file.getName().matches("r_-?[0-9]{1,18}\\.jpg") || !file.isFile() || file.length()>500000 || file.length()<800) continue;
+                        out.putNextEntry(new ZipEntry(file.getName()));
+                        try (FileInputStream in=new FileInputStream(file)) {
+                            byte[] buffer=new byte[8192];int len;
+                            while ((len=in.read(buffer))!=-1) out.write(buffer,0,len);
+                        }
+                        out.closeEntry();
+                        if (++count>=1000) break;
+                    }
+                    out.finish();
+                    emit("RezeptWorldPhotoBackupStatus", JSONObject.quote("Сохранён архив фото: "+count));
+                } catch (Exception e) {
+                    emit("RezeptWorldPhotoBackupStatus",JSONObject.quote("Не удалось сохранить архив фотографий"));
+                }
+            }).start();
+        } else if (requestCode == IMPORT_DISH_PHOTOS && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            final Uri uri=data.getData();
+            new Thread(() -> {
+                int count=0;int sum=0;
+                try (InputStream raw=getContentResolver().openInputStream(uri);
+                     ZipInputStream zip=new ZipInputStream(raw)) {
+                    File dir=new File(getFilesDir(),"dish_photos");
+                    if (!dir.isDirectory() && !dir.mkdirs()) throw new Exception("Storage");
+                    ZipEntry entry;
+                    while ((entry=zip.getNextEntry())!=null) {
+                        if (entry.isDirectory() || !entry.getName().matches("r_-?[0-9]{1,18}\\.jpg")) throw new Exception("Bad archive entry");
+                        ByteArrayOutputStream bytes=new ByteArrayOutputStream();
+                        byte[] buffer=new byte[8192];int n;
+                        while ((n=zip.read(buffer))!=-1) {
+                            if (bytes.size()+n>500000) throw new Exception("Large photo");
+                            bytes.write(buffer,0,n);
+                        }
+                        byte[] picture=bytes.toByteArray();
+                        if (picture.length<800 || (picture[0]&255)!=255 || (picture[1]&255)!=216) throw new Exception("Invalid JPEG");
+                        File target=new File(dir,entry.getName());
+                        try (FileOutputStream output=new FileOutputStream(target)) {output.write(picture);}
+                        zip.closeEntry();
+                        count++;sum+=picture.length;
+                        if (count>1000 || sum>50000000) throw new Exception("Archive too large");
+                    }
+                    emit("RezeptWorldPhotoBackupStatus",JSONObject.quote("Восстановлено фотографий: "+count));
+                } catch (Exception e) {
+                    emit("RezeptWorldPhotoBackupStatus",JSONObject.quote("Не удалось восстановить архив фото"));
+                }
+            }).start();
         } else if (requestCode == PICK_BACKUP && resultCode == RESULT_OK &&
                    data != null && data.getData() != null) {
             final Uri uri = data.getData();
