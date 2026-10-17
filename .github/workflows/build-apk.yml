@@ -58,6 +58,8 @@ jobs:
         run: node tools/validate_catalog_groups.js
       - name: Validate professional cookbook wording
         run: python3 tools/validate_editorial.py
+      - name: Validate personal photos and recovery
+        run: node tools/validate_personal_photos.js
       - name: Build compatible debug APK
         run: gradle --no-daemon :app:assembleDebug
       - name: Upload APK
