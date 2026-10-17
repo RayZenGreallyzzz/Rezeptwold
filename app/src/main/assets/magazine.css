@@ -99,3 +99,12 @@ header {background:#10140f!important;border-bottom:1px solid #5c472f!important}
 .catalog-total .soft{flex-shrink:0;background:#e3b873;color:#151712;border-color:#ddbc87;font-weight:700;padding:10px 12px;font-size:12px}
 #moreBtn{border-color:#b88b49;color:#f0cc95;margin:15px auto 35px;min-height:46px;font-weight:650}
 @media(max-width:480px){.catalog-total{flex-direction:column;align-items:stretch}.catalog-total button{width:100%;min-height:43px}}
+
+/* Personal photos taken after cooking: pinned to each recipe. */
+.dish-photo-actions{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin:8px 0 18px;padding:13px;background:#25251e;border:1px solid #876c43;border-radius:13px}
+.dish-photo-actions button{flex:1 1 180px;min-height:42px;border-radius:9px;font-size:13px}
+.dish-photo-actions .primary{color:#17130f;background:linear-gradient(180deg,#efcc90,#c99f5d);font-weight:700}
+.dish-photo-actions .soft{border-color:#846949;color:#f0d3a6;background:#302b22}
+.dish-photo-actions .photo-hint{width:100%;font-size:12px;color:#c2b7a4;line-height:1.45}
+.tile .photocaption{font-weight:600}
+@media(max-width:420px){.dish-photo-actions{padding:10px}.dish-photo-actions button{flex-basis:100%}}
