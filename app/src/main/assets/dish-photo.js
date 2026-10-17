@@ -34,5 +34,5 @@ function remove(id){
   remember(k,'');return true;
  }catch(e){return false}
 }
-window.VkusferaDishPhotos={get:get,save:save,remove:remove};
+window.VkusferaDishPhotos={get:get,save:save,remove:remove,clearCache:function(){cache={};order=[]}};
 })();
