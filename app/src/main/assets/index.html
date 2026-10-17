@@ -97,7 +97,7 @@ footer{padding:25px 0;text-align:center;color:#879185;font-size:12px}
  <div id="gallery" class="gallery"></div><button class="soft full" id="moreBtn">Показать ещё рецепты</button>
 </section>
 <section id="countryScreen"><div class="browsehead"><button id="backCountries">‹</button><h2>Национальные кухни</h2></div><p class="muted">🌍 Блюда, выпечка и напитки по странам</p><input class="country-search" type="search" id="countrySearch" placeholder="Поиск страны или кухни…"><div class="countrygrid" id="countriesList"></div></section>
-<section id="extraScreen"><div class="browsehead"><button id="backExtra">‹</button><h2>Настройки и данные</h2></div><div class="extraoptions"><button id="extraNew">＋ Добавить свой рецепт</button><button id="extraSync">☁ Загрузить новые рецепты</button><button id="extraExport">⇩ Сохранить мои рецепты</button><button id="extraImport">⇧ Восстановить рецепты</button><button id="extraCountries">🌍 Национальные кухни</button><button id="extraOffline">◉ Переключить онлайн / офлайн</button><button id="extraGoogle">🌐 Найти рецепт в Google</button><p class="muted">Базовые рецепты и личная библиотека работают без интернета. В онлайн-режиме можно искать любые блюда в Google: результаты откроются в браузере. Дополнения к офлайн-каталогу загружаются отдельно.</p></div></section>
+<section id="extraScreen"><div class="browsehead"><button id="backExtra">‹</button><h2>Настройки и данные</h2></div><div class="extraoptions"><button id="extraNew">＋ Добавить свой рецепт</button><button id="extraSync">☁ Загрузить новые рецепты</button><button id="extraExport">⇩ Сохранить мои рецепты</button><button id="extraImport">⇧ Восстановить рецепты</button><button id="extraPhotoExport">📷 Сохранить архив моих фото</button><button id="extraPhotoImport">📥 Восстановить мои фото</button><button id="extraCountries">🌍 Национальные кухни</button><button id="extraOffline">◉ Переключить онлайн / офлайн</button><button id="extraGoogle">🌐 Найти рецепт в Google</button><p class="muted">Базовые рецепты и личная библиотека работают без интернета. В онлайн-режиме можно искать любые блюда в Google: результаты откроются в браузере. Дополнения к офлайн-каталогу загружаются отдельно.</p></div></section>
 </main>
 <footer>Вкусфера · приложение для Android · Рецепты и технологии разных стран · офлайн-библиотека</footer>
 <nav id="bottomNav" aria-label="Навигация"><button data-nav="home" class="active"><span>⌂</span><span>Главная</span></button><button data-nav="search"><span>⌕</span><span>Поиск</span></button><button data-nav="fav"><span>♡</span><span>Избранное</span></button><button data-nav="mine"><span>▤</span><span>Мои рецепты</span></button><button data-nav="more"><span>⋯</span><span>Ещё</span></button></nav>
@@ -118,7 +118,7 @@ footer{padding:25px 0;text-align:center;color:#879185;font-size:12px}
 <label class="block">Фото блюда (необязательно)<input id="editPhoto" type="file" accept="image/*"></label>
 <img id="photoPreview" alt="Предпросмотр фото" style="display:none">
 <div class="editorbuttons"><button class="primary" id="saveBtn">Сохранить рецепт</button><button class="soft" id="removePhoto" style="display:none">Убрать фото</button></div>
-<p class="muted">Рецепт сохранится в памяти приложения на этом устройстве. Для переноса используйте резервную копию.</p>
+<p class="muted">Рецепт сохранится в памяти приложения на этом устройстве. Для переноса рецептов сохраните резервную копию; фотографии блюд архивируются отдельно в разделе «Ещё».</p>
 </div></div>
 <div id="toast" role="status"></div>
 <input id="backupFile" type="file" accept=".json,application/json" style="display:none">
@@ -397,6 +397,10 @@ el('extraExport').onclick=function(){backup()};
 el('extraImport').onclick=function(){importBackup()};
 el('extraCountries').onclick=function(){renderCountries();navigate('countries')};
 el('extraOffline').onclick=function(){setModeOnline(!mode)};
+el('extraPhotoExport').onclick=function(){if(window.RezeptWorldNative&&window.RezeptWorldNative.exportDishPhotos)window.RezeptWorldNative.exportDishPhotos();else toast('Архив фотографий доступен в Android-приложении')};
+el('extraPhotoImport').onclick=function(){if(window.RezeptWorldNative&&window.RezeptWorldNative.importDishPhotos)window.RezeptWorldNative.importDishPhotos();else toast('Восстановление фото доступно в Android-приложении')};
+window.RezeptWorldPhotoBackupStatus=function(message){if(window.VkusferaDishPhotos)window.VkusferaDishPhotos.clearCache();show();renderHome();if(active&&el('reader').style.display==='block')renderReader();toast(message)};
+
 el('extraGoogle').onclick=function(){if(!mode)setModeOnline(true);browse('all','Поиск в Google');el('q').focus()};
 window.VkusferaBack=function(){
  if(el('editor').style.display==='block'){closeOverlay('editor');return true}
