@@ -16,13 +16,14 @@ for filename,key in [
     ("world-main-1.js","VKUSFERA_WORLD_B"),
     ("world-drinks-preserves-1.js","VKUSFERA_WORLD_C"),
     ("journal-recipes.js","VKUSFERA_JOURNAL"),
+    ("extra-cuisines-1.js","VKUSFERA_EXTRA"),
 ]:
     s=(assets/filename).read_text(encoding="utf-8").strip()
     prefix="window."+key+"="
     assert s.startswith(prefix) and s.endswith(";"),filename
     rows.extend(json.loads(s[len(prefix):-1]))
-assert len(rows)==539
-assert sum(not r.get("reference_only",False) for r in rows)==529
+assert len(rows)==579
+assert sum(not r.get("reference_only",False) for r in rows)==569
 assert sum(bool(r.get("reference_only")) for r in rows)==10
 assert len(set(r["series_number"] for r in rows))==len(rows)
 assert len(set(r["name"].casefold() for r in rows))==len(rows)
@@ -39,4 +40,4 @@ assert "'Храните в холодильнике; не используйте
 assert "Алкоголь — только для совершеннолетних." not in html
 assert "Готовьте с удовольствием." not in html
 assert "el('readerNote').style.display=note||safety||source?'block':'none'" in html
-print("OK: adult cookbook copy for 529 recipes; 10 clear technical articles; food safety retained.")
+print("OK: adult cookbook copy for 569 recipes; 10 clear technical articles; food safety retained.")
